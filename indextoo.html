@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+ <!--<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+
+<style>
+
+    .container {
+  width: 80%; /* Will be 80% of the parent element or screen */
+  max-width: 1200px; /* Add a max-width to prevent over-expansion on large screens */
+  padding: 20px;
+}
+
+   p{ text-align: center}
+   h2{ text-align: center}
+    .description-box {
+        width: 100%;               /* Ensure it takes full width of its container */
+  max-width: 1200px;
+  border: 2px solid black; /* Black border around the box */
+  padding: 20px; /* Adds space between the text and the border */
+  border-radius: 8px; /* Optional: Slightly rounded corners */
+  background-color: #f9f9f9; /* Optional: Light background color */
+  max-width: 80%; /* Limit the width of the box */
+  margin: 20px auto; /* Center the box on the page */
+}
+
+.description-box p {
+  margin: 0; /* Ensures no extra margin around text inside the box */
+}
+
+
+.description-box.highlight {
+  background-color: #ffffcc; /* Light yellow highlight color */
+  border-color: #ffaa00; /* Darker border color when highlighted */
+}
+
+.title-with-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title-with-logo img {
+  width: 50px;
+  height: 40px;
+  object-fit: cover;
+}
+#map { width: 100%;height: 600px; }
+.popup {
+  font-size: 1.1 rem;
+     }
+
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #003366;
+      color: var(--ub-dark-gray);
+      margin: 0;
+      padding: 0;
+    }
+
+
+
+    h1 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-top: 20px;
+      padding: 10px;
+    }
+nav {
+      background-color: #0056b3;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav a {
+      color: var(--ub-white);
+      font-weight: bold;
+      margin: 0 15px;
+      text-decoration: none;
+    }
+
+
+
+
+    <!--
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f4f8;
+    }
+    header {
+      background-color: #003366;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+    }
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    .map-container {
+      width: 80%;
+      height: 500px;
+      margin-bottom: 30px;
+    }
+    .description-box {
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      width: 80%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .description-box:hover {
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    .title-with-logo {
+      display: flex;
+      align-items: center;
+    }
+    .title-with-logo img {
+      margin-left: 10px;
+      width: 60px;
+    }
+    .description-box p {
+      max-width: 70%;
+      margin: 0;
+    }
+    footer {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+</style>
+ <!-- Make sure you put this AFTER Leaflet's CSS
+ <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>-->
+
+     </head>
+<body>
+<nav>
+  <a href="sloan.html">Sloan Foundation AI Research</a>
+  <a href="contact.html">Contact Us</a>
+  <a href="indextoo.html">Equitable AI Research Map</a>
+</nav>
+
+<h1> Mapping Equitable and Inclusive AI: A Cross-Institutional Research and Curricular Initiative</h1>
+
+<div id="map"></div>
+
+
+<div class="map-info">
+  <h2>  Equitable and Inclusive AI Curricular Innovation and Research Initiative</h2>
+    <p>The goal of this project is to develop cross-institution professional and research opportunities
+for graduate students and faculty at both Morgan State and University at Buffalo that focus
+specifically on building Equitable and Inclusive AI. These opportunities will provide students
+with an expanded network of professional mentors, unique localized research opportunities
+across institutions, and a broad cross-institution of cohort-based professional development
+and community of practice. Additionally, this project aims to expand and innovate curricula
+that integrates principles of equity and inclusion within AI studies.</p>
+
+
+<div class="description-box">
+    <div class="title-with-logo"
+    <h3>Justice and Equity in Technology Policy course on Coursea , University Of Michigan</h3>      <img src="./U-M_Logo-Hex.png" alt="George Washington University Logo">
+</div>
+  <p>The Justice and Equity in Technology Policy course on Coursera, offered by the University of Michigan, explores how technology and policies can reinforce inequities, particularly affecting marginalized communities. It focuses on topics like algorithmic bias, AI design, and the politics of innovation, urging learners to rethink power dynamics in tech development and policymaking.
+Key themes include the role of social values in shaping technology, the importance of inclusive policies, and addressing biases in regulation. Led by experts like Virginia Eubanks and Shobita Parthasarathy, the course provides micro-credentials and examines intersections between AI, equity, justice, and DEI, offering tools to advocate for more equitable systems.
+</p>
+    </div>
+<div class="description-box">
+    <div class="title-with-logo"
+  <h3> Designing Trustworthy AI Systems (DTAIS) program, George Washigton Univeristy</h3>   <img src="./George_Washington_Athletics_logo.svg.png" alt="George Washington University Logo">
+</div>
+    <p>GW Engineering is focused on developing the next generation of AI algorithms and systems, with an emphasis on how they can be integrated into society. Ph.D. fellows from the Designing Trustworthy AI Systems (DTAIS) program gain hands-on experience with AI and machine learning challenges. DTAIS is committed to innovative teaching, interdisciplinary education, and broadening STEM access to underrepresented communities. The program will also offer a graduate certificate to equip students and professionals with the skills to lead in the AI field.</p>
+</div>
+<div class="description-box">
+
+        <div class="title-with-logo"
+
+  <h3>Institute for Human-Centered Artificial Intelligence, Howard University <img src="./6vohWqtw_400x400.jpg" alt="George Washington University Logo">
+</h3>
+    </div>
+
+  <p>The Howard University AI Initiative focuses on ethics, equity, and societal impact by supporting research and discussions on ethical AI principles and bias mitigation, while promoting diversity in the AI community. It engages policymakers and community stakeholders to ensure AI benefits all of society, supports faculty and student-led research across AI domains, and fosters collaboration with industry. Additionally, it offers educational programs and workshops in various fields and aims to improve operational efficiency using AI across the university.</p>
+</div>
+
+<div class="description-box">
+
+        <div class="title-with-logo"
+
+  <h3>Trustworthy AI in Law & Society (TRAILS) Partnership,University of Maryland <img src="new3trailslogoscover.jpg" alt="new3trailslogoscover.jpg">
+</h3>
+    </div>
+
+  <p> TRAILS is a collaborative partnership between the University of Maryland, George Washington University, Morgan State University, and Cornell University, aiming to shift AI development from a purely technological focus to one that prioritizes ethics, human rights, and community input. Their work focuses on:
+- Developing methods for AI trustworthiness.
+- Empowering users to better understand AI systems.
+- Promoting inclusive governance for trust and accountability.
+- Training a multidisciplinary next generation of talent.
+- Centering marginalized voices in AI development and policy discussions.
+	</p>
+</div>
+<div class="description-box">
+
+        <div class="title-with-logo"
+
+  <h3>The Learning Futures Collaborative at ASU&#39S Mary Lou Fulton Teachers College <img src="ASU-logo.png" alt="ASU Logo">
+</h3>
+    </div>
+
+  <p>The Learning Futures Collaborative at ASU&#39S  Mary Lou Fulton Teachers College focuses on AI in education and its intersection with diversity, equity, and inclusion (DEI). The team has published research articles, held conferences, and launched workshops to help K-12 teachers understand AI&#39s role in education. They&#39ve also created learning modules ("power-ups") on topics like AI basics and potential pitfalls. Future plans include further research with AI in education, new collaborations, and exploring generative AI use across schools, universities, and community groups.
+	</p>
+</div>
+
+
+<div class="description-box">
+
+        <div class="title-with-logo"
+
+    <h3>The AAAS S&T Policy Fellowships (STPF) </h3>  <img src="aasu.png" alt="aaas-stpf-logo.png">
+
+    </div>
+
+    <p> The AAAS S&T Policy Fellowships (STPF) is host a virtual panel discussion, "Healthcare, Equity, & AI: Navigating Policy Challenges & Opportunities." This event, part of an ongoing AI policy series, will explore the intersection of AI, equity, and healthcare. Experts will discuss the role of policy in shaping equitable AI healthcare applications, making AI-driven solutions accessible, and involving underrepresented communities in AI development.
+
+	</p>
+</div>
+
+
+
+
+
+<div class="description-box">
+    <div class="title-with-logo"
+    <h3>Center for Early Literacy and Responsible AI , University At Buffalo</h3>      <img src="ub ai.png" alt="UB Logo">
+</div>
+<p> The Center for Early Literacy and Responsible AI will leverage artificial intelligence to revolutionize early literacy education for culturally and linguistically diverse students in kindergarten through second grade, with a focus on schools across the U.S., including Buffalo Public Schools and Erie 1 BOCES.
+
+The center will carry out three main initiatives: Research and development of the AIRE tool through national surveys, user-centered studies, and an efficacy study.
+Addressing ethical concerns around AI in education by establishing responsible AI guidelines.
+Providing national leadership in responsible AI and early literacy through research dissemination and capacity-building efforts.</p>
+    </div>
+<div class="description-box"
+    <div class="title-with-logo"
+<h3> Institute for AI and Data Science at UB. </h3> <img src="download.jpg" width="150" height="50"  >
+<p> The UB AI Institute is dedicated to positioning UB at the leading edge of AI and Data Science by addressing critical issues and pioneering scholarly initiatives aimed at:
+
+Advancing the core disciplines of AI and Data Science,
+Uncovering interdisciplinary applications that benefit a wide range of fields,
+Examining the social and cultural impacts of AI while leading the development of ethical and legal policies,
+Crafting innovative educational programs and skill-building opportunities to prepare students and reskill the workforce for the era of AI and big data,
+Forging strategic partnerships with industry and government entities, and
+Creating robust training ecosystems that support workforce development in emerging AI domains.</p>
+</div>
+
+
+</body>
+<script>
+  const map = L.map('map')
+      //.setView([51.05,-0.09],13);
+  map.setView([38.13, -99.49],7);
+
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map)
+
+    const data = {
+
+    Michigan: { coords:[42.2771, -83.7382],
+    title: "Justice and Equity in Technology Policy Course",
+      address: `
+              <b>Justice and Equity in Technology Policy Course on Coursera </b><br>
+                  Online, University at Michigan<br>
+            `,
+          website: 'https://www.coursera.org/learn/justice-and-equity-in-technology-policy',
+
+    },
+    GW: {coords:[38.899978, -77.049461],
+    title: "Designing Trustworthy AI Systems,George Washigton  University",
+      address: `
+              <b>Designing Trustworthy AI Systems (DTAIS) Program</b><br>
+
+             Science & Engineering Hall, George Washigton  University<br>`,
+          website: 'https://dtais.engineering.gwu.edu/',
+        phone: 'gwdtais@gwu.edu',
+    }, Maryland: {
+            coords: [38.989255, -76.936642],
+            title: "TRAILS, University of Maryland",
+            address: `
+              <b>Trustworthy AI in Law & Society (TRAILS) Partnership  </b><br>
+                  <br>
+              Center for Computer Science and Engineering,University of Maryland  <br>`,
+            website: 'https://www.trails.umd.edu/',
+            phone: 'trails@umiacs.umd.edu',
+//Institute for Human-Centered Artificial Intelligence(!)
+        },
+        ASU : {
+            coords: [33.418014, -111.937391 ],
+            title: " The Learning Futures Collaborative, ASU’s Mary Lou Fulton Teachers College ",
+            address: `
+              <b> The Learning Futures Collaborative  </b><br>
+                  <br>
+              CHB Farmer Education Building, ASU Mary Lou Fulton Teachers College  <br>`,
+            website: 'https://learningfutures.education.asu.edu/lfc/artificial-intelligence-in-education/',
+
+//Institute for Human-Centered Artificial Intelligence(!)
+        },
+
+        Howard: {
+            coords: [38.921536, -77.021601],
+            title: "AI Initiative, Howard University",
+            address: `
+              <b>The Howard University AI Initiative  (DSC2)</b><br>
+                   (DSC2)<br>
+            Data Science and Cybersecurity Center, Howard University<br>`,
+            website: 'https://thedig.howard.edu/announcements/announcing-howard-universitys-groundbreaking-ai-initiative',
+
+//Institute for Human-Centered Artificial Intelligence(!)
+        }, Buffalo : {
+            coords: [43.0014, -78.7847],
+            title: " Center for Early Literacy and Responsible AI , Univeristy at Buffalo ",
+            address: `
+              <b> Center for Early Literacy and Responsible AI   </b><br>
+                  <br>
+             Center for Early Literacy and Responsible AI (CELaRAI) , State University of New York (SUNY), Buffalo  <br>`,
+            website: 'https://learningfutures.education.asu.edu/lfc/artificial-intelligence-in-education/',
+
+//Institute for Human-Centered Artificial Intelligence(!)
+
+        } , Buffalo : {
+            coords: [43.0014, -78.7846],
+            title: " Institute for AI and Data Science at UB , Univeristy at Buffalo ",
+            address: `
+              <b> Institute for AI and Data Science at UB   </b><br>
+                  <br>
+             Institute for AI and Data Science at UB  , State University of New York (SUNY), Buffalo  <br>`,
+            website: 'https://www.buffalo.edu/ai-data-science.html',
+
+//Institute for Human-Centered Artificial Intelligence(!)
+
+        }
+  }
+
+const customIcon = L.icon({
+ iconUrl: './istockphoto-1302140271-612x612.jpg',
+  iconSize: [40,40],
+})
+
+
+ // CAN CREATE ANOTHER MARKER - NOT EFFICENT - CODE REP
+
+for (let key in data){
+  const college = data[key];
+
+   L.marker(college.coords, {
+   title: college.title,
+  icon: customIcon,
+  })       .bindPopup(`
+  <span class="popup">
+    ${college.address}
+    <a href="${college.website}" target="_blank">Website</a><br>
+    Call: <a href="tel:${college.phone}">${college.phone}</a>
+  </span>
+`).addTo(map)
+}
+//          .bindPopup('
+//          <span class="popup">
+//            ${college.address}
+//
+//                          <a href=${college.website} target="_blank">Websitre</a><br>
+//                    Call: <a href="tel: ${college.phone}"> ${college.phone}</a>
+// </span>
+//  ')
+
+  //IGNORE AFTER FOR LOOP IM
+
+ // L.marker([42.2771, 83.7382], {
+  //  title: "University at Michigan",
+  //icon: customIcon,
+  //})
+         // .bindPopup('
+        //  <span class="popup">
+          //  <b> Michagan</b><br>
+                 // 123<br>
+                 // London<br>
+                     //     <a href="" target="_blank">Websitre</a><br>
+                  //  Call: <a href="tel: 123"> 123</a>
+//</span>
+ // ')
+ // .addTo(map)
+
+  //IGNORE AFTER FOR LOOP IM
+
+
+
+
+</script>
+</html>
